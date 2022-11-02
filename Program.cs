@@ -1,5 +1,4 @@
 ﻿using System;
-<<<<<<< HEAD
 using VkNet;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
@@ -9,14 +8,12 @@ using System.Threading;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Configuration;
-=======
->>>>>>> parent of cd534d8 (Add get/send functions)
+
 
 namespace VkOnTheWay
 {
     internal class Program
     {
-<<<<<<< HEAD
         static public VkApi vkApi = new VkApi();
         static string[] Commands = { "Hello" };
         private static string key = ConfigurationManager.AppSettings["apiKey"];
