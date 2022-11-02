@@ -6,6 +6,8 @@ using VkNet.Enums.Filters;
 using VkNet.Enums.SafetyEnums;
 using System.Threading;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Configuration;
 
 namespace VkOnTheWay
 {
@@ -13,15 +15,16 @@ namespace VkOnTheWay
     {
         static public VkApi vkApi = new VkApi();
         static string[] Commands = { "Hello" };
-        const string key = "vk1.a.mkY2jhTapCACplg87Iw5ESce5FBx1dIuPtIfoTu87f6Wijd23nQ9WDvZwrSXQ6zT9nRC747g5aBAd-eEoCUnZiOob3DLV1W3eZv6W3rj2u4K6vRbq3SURAWShU9-ZXHibv1Tb5rAGr4995e7rpfnZ0u1QZwu3QTRmTVNhbTui8lMuyGnH6cbi5zLvFYRYXfyWFcNsGyO0d4eEb6sGkMtEA";
-
+        private static string key = ConfigurationManager.AppSettings["apiKey"];
+        
         static void Main(string[] args)
         {
             try
             {
                 vkApi.Authorize(new ApiAuthParams
                 {
-                    AccessToken = key
+                    AccessToken = key,
+                    
                 });
             }
             catch (Exception ex)
@@ -30,10 +33,14 @@ namespace VkOnTheWay
                 return;
             }
             Console.WriteLine("Авторизация пройдена успешно");
+            var startTime = System.Diagnostics.Stopwatch.StartNew();
             while (true)
             {
-                Thread.Sleep(50);
+                Thread.Sleep(250);
                 Receive();
+                startTime.Stop();
+                Console.WriteLine(startTime.ElapsedMilliseconds);
+                startTime.Restart();
             }
         }
 
@@ -62,6 +69,7 @@ namespace VkOnTheWay
         }
         public static Message GetMessage()
         {
+            Console.WriteLine("Я получаю сообщение");
             var message = vkApi.Messages.GetConversations(new GetConversationsParams
             {
                 Count = 1,
@@ -72,9 +80,9 @@ namespace VkOnTheWay
             return null;
         }
 
-        public static Int32 generateId()
+        public static long generateId()
         {
-            return DateTime.Now.Millisecond;
+            return DateTime.Now.Ticks;
         }
     }
 }
