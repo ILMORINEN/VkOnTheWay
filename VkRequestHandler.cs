@@ -21,6 +21,16 @@ namespace VkOnTheWay
         public static Dictionary<long, User> GetUserById(VkApi vkApi, IEnumerable<long> ids)
         {
             return vkApi.Users.Get(ids,ProfileFields.Sex).ToDictionary(x => x.Id, x => x);
+        public static List<string> GetUserUnreadMessages(VkApi vkApi, KeyValuePair<long, long?> conversation)
+        {
+            var messagesHistory = vkApi.Messages.GetHistory(new MessagesGetHistoryParams
+            {
+                PeerId = conversation.Key,
+                Count = conversation.Value,
+            });
+            return messagesHistory.Messages
+                                  .Select(x => x.Text)
+                                  .ToList();
         }
     }
 }
