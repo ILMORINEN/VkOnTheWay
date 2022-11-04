@@ -47,33 +47,33 @@ namespace VkOnTheWay
 
         public static void Receive()
         {
-            var message = GetMessage();
+            var message = VkRequestHandler.GetUsersUnreadMessagesCount(vkApi);
+            var users = VkRequestHandler.GetUserByIds(vkApi, message.Select(x => x.Key));
             if (message == null)
                 return;
             
-            Console.WriteLine(message.Text);
+            Console.WriteLine(message);
             
-            var user = vkApi.Users.Get(new long[] { (long)message.PeerId },
-                                       ProfileFields.Sex);
+            //var user = vkApi.Users.Get(new long[] { (long)message.PeerId },
+            //                           ProfileFields.Sex);
 
-            string userName = user.Select(x => $"{x.FirstName} {x.LastName}")
-                                  .FirstOrDefault();
+            //string userName = user.Select(x => $"{x.FirstName} {x.LastName}")
+            //                      .FirstOrDefault();
             
-            Console.WriteLine(userName);
-            vkApi.Messages.MarkAsRead(message.PeerId.ToString());
-            vkApi.Messages.Send(new MessagesSendParams
-            {
-                PeerId = message.PeerId,
-                RandomId = generateId(),
-                Message = "еблан?"
-            });
+            //Console.WriteLine(userName);
+            //vkApi.Messages.MarkAsRead(message.PeerId.ToString());
+            //vkApi.Messages.Send(new MessagesSendParams
+            //{
+            //    PeerId = message.PeerId,
+            //    RandomId = generateId(),
+            //    Message = "еблан?"
+            //});
         }
         public static Message GetMessage()
         {
             Console.WriteLine("Я получаю сообщение");
             var message = vkApi.Messages.GetConversations(new GetConversationsParams
             {
-                Count = 1,
                 Filter = GetConversationFilter.Unread
             });
             if (message.Items.Count != 0)

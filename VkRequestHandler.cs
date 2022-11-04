@@ -1,15 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using VkNet;
+using VkNet.Enums.Filters;
 using VkNet.Enums.SafetyEnums;
 using VkNet.Model;
 using VkNet.Model.RequestParams;
 
 namespace VkOnTheWay
 {
-    internal class MessageHandler
+    internal class VkRequestHandler
     {
-        public static Dictionary<long, long?> GetConversationsUnreadMessages(VkApi vkApi)
+        public static Dictionary<long, long?> GetUsersUnreadMessagesCount(VkApi vkApi)
         {
             var conversationsResult = vkApi.Messages.GetConversations(new GetConversationsParams
             {
@@ -19,7 +20,7 @@ namespace VkOnTheWay
         }
         public static Dictionary<long, User> GetUserByIds(VkApi vkApi, IEnumerable<long> ids)
         {
-            return vkApi.Users.Get(ids).ToDictionary(x => x.Id, x => x);
+            return vkApi.Users.Get(ids,ProfileFields.Sex).ToDictionary(x => x.Id, x => x);
         }
     }
 }
