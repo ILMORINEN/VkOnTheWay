@@ -39,5 +39,13 @@ namespace VkOnTheWay
         {
             vkApi.Messages.MarkAsRead(user.ToString());
         }
+        public static void SendMessageToUser(VkApi vkApi, long user, string text)
+        {
+            vkApi.Messages.Send(new MessagesSendParams
+            {
+                PeerId = user,
+                Message = text,
+            });
+        }
     }
 }
