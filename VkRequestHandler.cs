@@ -16,11 +16,14 @@ namespace VkOnTheWay
             {
                 Filter = GetConversationFilter.Unread
             });
-            return conversationsResult.Items.ToDictionary(x => x.Conversation.Peer.Id, x => x.Conversation.UnreadCount);
+            return conversationsResult.Items.ToDictionary(x => x.Conversation.Peer.Id,
+                                                          x => x.Conversation.UnreadCount);
         }
-        public static Dictionary<long, User> GetUserById(VkApi vkApi, IEnumerable<long> ids)
+        public static Dictionary<long, User> GetUsersById(VkApi vkApi, IEnumerable<long> ids)
         {
-            return vkApi.Users.Get(ids,ProfileFields.Sex).ToDictionary(x => x.Id, x => x);
+            return vkApi.Users.Get(ids,ProfileFields.Sex)
+                              .ToDictionary(x => x.Id, x => x);
+        }
         public static List<string> GetUserUnreadMessages(VkApi vkApi, KeyValuePair<long, long?> conversation)
         {
             var messagesHistory = vkApi.Messages.GetHistory(new MessagesGetHistoryParams
