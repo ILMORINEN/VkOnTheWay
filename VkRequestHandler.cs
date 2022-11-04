@@ -10,7 +10,7 @@ namespace VkOnTheWay
 {
     internal class VkRequestHandler
     {
-        public static Dictionary<long, long?> GetUsersUnreadMessagesCount(VkApi vkApi)
+        public static Dictionary<long, long?> GetUsersUnreadMessagesInfo(VkApi vkApi)
         {
             var conversationsResult = vkApi.Messages.GetConversations(new GetConversationsParams
             {
@@ -18,7 +18,7 @@ namespace VkOnTheWay
             });
             return conversationsResult.Items.ToDictionary(x => x.Conversation.Peer.Id, x => x.Conversation.UnreadCount);
         }
-        public static Dictionary<long, User> GetUserByIds(VkApi vkApi, IEnumerable<long> ids)
+        public static Dictionary<long, User> GetUserById(VkApi vkApi, IEnumerable<long> ids)
         {
             return vkApi.Users.Get(ids,ProfileFields.Sex).ToDictionary(x => x.Id, x => x);
         }
