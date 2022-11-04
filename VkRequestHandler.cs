@@ -47,5 +47,14 @@ namespace VkOnTheWay
                 Message = text,
             });
         }
+        public static void SendMessageToUser(VkApi vkApi, long user, string text, MessageKeyboard keyboard)
+        {
+            vkApi.Messages.Send(new MessagesSendParams
+            {
+                PeerId = user,
+                Message = text,
+                Keyboard = keyboard
+            });
+        }
     }
 }
