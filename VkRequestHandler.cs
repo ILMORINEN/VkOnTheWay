@@ -35,5 +35,9 @@ namespace VkOnTheWay
                                   .Select(x => x.Text)
                                   .ToList();
         }
+        public static void MarkAsRead(VkApi vkApi, long user)
+        {
+            vkApi.Messages.MarkAsRead(user.ToString());
+        }
     }
 }
