@@ -9,7 +9,7 @@ using VkNet.Model.RequestParams;
 
 namespace VkOnTheWay
 {
-    internal class VkRequestHandler
+    public class VkRequestHandler
     {
         public static Dictionary<long, long?> GetUsersUnreadMessagesInfo(VkApi vkApi)
         {
