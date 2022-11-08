@@ -12,5 +12,11 @@ namespace VkOnTheWay
             this.vkApi = vkApi;
         }
 
+        public void Reiceive()
+        {
+            var usersUnreadMessagesInfo = VkRequestHandler.GetUsersUnreadMessagesInfo(vkApi);
+            var usersInfo = VkRequestHandler.GetUsersById(vkApi, usersUnreadMessagesInfo.Keys);
+            Parallel.ForEach(usersUnreadMessagesInfo, userMessages => AggregateUserMessages(userMessages, usersInfo))
+        }
     }
 }
