@@ -16,7 +16,7 @@ namespace VkOnTheWay
     {
         static public VkApi vkApi = new VkApi();
         static string[] Commands = { "Hello" };
-        private static string key = ConfigurationManager.AppSettings["apiKey"];
+        private static string key = ConfigurationManager.AppSettings["apiKey"]; 
         
         static void Main(string[] args)
         {
@@ -24,8 +24,7 @@ namespace VkOnTheWay
             {
                 vkApi.Authorize(new ApiAuthParams
                 {
-                    AccessToken = key,
-                    
+                    AccessToken = key
                 });
             }
             catch (Exception ex)
