@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using VkNet;
+using VkNet.Model;
 
 namespace VkOnTheWay
 {
