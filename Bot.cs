@@ -20,7 +20,7 @@ namespace VkOnTheWay
         }
         public void Receive()
         {
-            var usersUnreadMessagesInfo = VkRequestHandler.GetUsersUnreadMessagesInfo(vkApi);
+            var usersUnreadMessagesInfo = VkRequestHandler.GetConversationsUnreadMessgesCount(vkApi);
             var usersInfo = VkRequestHandler.GetUsersById(vkApi, usersUnreadMessagesInfo.Keys);
             Parallel.ForEach(usersUnreadMessagesInfo, userMessages => AggregateUserMessages(userMessages, usersInfo));
         }
