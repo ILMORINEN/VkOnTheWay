@@ -9,17 +9,20 @@ namespace VkOnTheWay
 {
     public class Bot
     {
-        private VkApi vkApi;
+        private readonly VkApi vkApi;
         public Bot(VkApi vkApi)
         {
             this.vkApi = vkApi;
         }
-
-        public void Reiceive()
+        private void AggregateUserMessages(KeyValuePair<long, long?> conversation, Dictionary<long, User> users)
+        {
+            var messages = VkRequestHandler.GetUserUnreadMessages(vkApi, conversation);
+        }
+        public void Receive()
         {
             var usersUnreadMessagesInfo = VkRequestHandler.GetUsersUnreadMessagesInfo(vkApi);
             var usersInfo = VkRequestHandler.GetUsersById(vkApi, usersUnreadMessagesInfo.Keys);
-            Parallel.ForEach(usersUnreadMessagesInfo, userMessages => AggregateUserMessages(userMessages, usersInfo))
+            Parallel.ForEach(usersUnreadMessagesInfo, userMessages => AggregateUserMessages(userMessages, usersInfo));
         }
     }
 }
