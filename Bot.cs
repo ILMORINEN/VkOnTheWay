@@ -6,6 +6,7 @@ namespace VkOnTheWay
 {
     public class Bot
     {
+        private VkApi vkApi;
 
     }
 }
