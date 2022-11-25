@@ -43,6 +43,7 @@ namespace VkOnTheWay
             });
             return messagesHistory.Messages
                                   .Select(x => x.Text)
+                                  .Reverse()
                                   .ToList();
         }
         /// <summary>
@@ -60,20 +61,31 @@ namespace VkOnTheWay
             vkApi.Messages.Send(new MessagesSendParams
             {
                 PeerId = user,
+                RandomId = generateId(),
                 Message = text,
             });
         }
         /// <summary>
         /// Отправляет пользователю сообщение.
         /// </summary>
-        public static void SendMessageToUser(VkApi vkApi, long user, string text, MessageKeyboard keyboard)
+        public static void SendMessageToUser(VkApi vkApi, long user, string text, string[] buttonsTitles)
         {
+            KeyboardBuilder keyboardBuilder = new KeyboardBuilder();
+            foreach (var buttonTitle in buttonsTitles)
+                keyboardBuilder.AddButton(new AddButtonParams
+                { Label = buttonTitle }).AddLine();
             vkApi.Messages.Send(new MessagesSendParams
             {
                 PeerId = user,
+                RandomId = generateId(),
                 Message = text,
-                Keyboard = keyboard
+                Keyboard = keyboardBuilder.SetOneTime().Build()
             });
+        }
+
+        private static long generateId()
+        {
+            return System.DateTime.Now.Ticks;
         }
     }
 }
